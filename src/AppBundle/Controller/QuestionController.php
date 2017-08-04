@@ -28,7 +28,7 @@ class QuestionController extends Controller
 //        $questions = $em->getRepository('AppBundle:Question')->findBy(array('count' => 18));
         foreach ($_questions as $key => $value) {
             dump(strlen($value->getText()));
-            if ((strlen($value))>19) {
+            if ((strlen($value))>1) {
                 $questions[]=$value;
             }
         }
