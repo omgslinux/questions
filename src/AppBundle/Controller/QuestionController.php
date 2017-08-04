@@ -23,7 +23,7 @@ class QuestionController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
+        $questions=[];
         $_questions = $em->getRepository('AppBundle:Question')->findAll();
 //        $questions = $em->getRepository('AppBundle:Question')->findBy(array('count' => 18));
         foreach ($_questions as $key => $value) {
