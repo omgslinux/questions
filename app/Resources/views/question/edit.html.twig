@@ -5,6 +5,9 @@
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
+        <ul class="answers" data-prototype="{{ form_widget(edit_form.answers.vars.prototype)|e('html_attr') }}">
+        {{ form_row(edit_form.answers )}}
+        </ul>
         <input type="submit" value="Edit" />
     {{ form_end(edit_form) }}
 

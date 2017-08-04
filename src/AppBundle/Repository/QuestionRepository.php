@@ -10,4 +10,16 @@ namespace AppBundle\Repository;
  */
 class QuestionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findbynumletter($numLetter)
+    {
+        $questionsRepository = $this->getRepository('AppBundle:Question');
+        $queryBuilder = $questionsRepository->createQueryBuilder('q');
+        $queryBuilder
+            ->andWhere('CHAR_LENGTH(q.text) = :numletter')
+            ->setParameter('numletter', $numLetter)
+        ;
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();
+
+    }
 }

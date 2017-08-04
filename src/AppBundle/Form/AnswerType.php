@@ -15,10 +15,6 @@ class AnswerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('question', EntityType::class, array(
-          'class' => 'AppBundle:Question',
-          'label' => 'Pregunta'
-        ))
         ->add('text')
         ->add('valid');
     }
