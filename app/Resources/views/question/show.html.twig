@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Question</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Text</th>
+            </tr>
+            <tr>
+                <td><a href="{{ path('question_edit', { 'id': question.id }) }}">{{ question.text }}</a> ({{ question.count }})</td>
+            </tr>
+        </tbody>
+    </table>
+    {% if question.answers.count %}
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th>Respuesta</th><th>¿Correcta?</th>
+        </tr>
+        {% for answer in question.answers %}
+        <tr>
+          <td>{{ answer.text }}</td>
+          <td>{{ answer.valid }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+
+    <ul>
+        <li>
+            <a href="{{ path('question_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}
