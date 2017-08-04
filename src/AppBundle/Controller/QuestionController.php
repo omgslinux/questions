@@ -23,16 +23,15 @@ class QuestionController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $questions=[];
-        $_questions = $em->getRepository('AppBundle:Question')->findAll();
-//        $questions = $em->getRepository('AppBundle:Question')->findBy(array('count' => 18));
-        foreach ($_questions as $key => $value) {
-            dump(strlen($value->getText()));
-            if ((strlen($value))>1) {
-                $questions[]=$value;
-            }
-        }
-        dump($_questions);
+
+        $questionsRepository = $em->getRepository('AppBundle:Question');
+        $queryBuilder = $questionsRepository->createQueryBuilder('q');
+        $queryBuilder
+            ->andWhere('CHAR_LENGTH(q.text) > :minLength')
+            ->setParameter('minLength', 1)
+        ;
+        $query = $queryBuilder->getQuery();
+        $questions = $query->getResult();
 
         return $this->render('question/index.html.twig', array(
             'questions' => $questions,
