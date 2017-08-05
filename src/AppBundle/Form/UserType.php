@@ -4,11 +4,12 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use AppBundle\Entity\Question;
+use AppBundle\Entity\Rol;
 
-class AnswerType extends AbstractType
+class UserType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -17,7 +18,9 @@ class AnswerType extends AbstractType
     {
         $builder
         ->add('text')
-        ->add('valid');
+        ->add('rol', EntityType::class, array(
+          'class' => Rol::class,
+        ));
     }
 
     /**
@@ -26,7 +29,7 @@ class AnswerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Answer'
+            'data_class' => 'AppBundle\Entity\User'
         ));
     }
 
@@ -35,7 +38,7 @@ class AnswerType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_answer';
+        return 'appbundle_questions';
     }
 
 

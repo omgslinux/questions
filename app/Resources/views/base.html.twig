@@ -7,6 +7,10 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        {% block jquery %}{% endblock %}
+        {% block bootstrap %}{% endblock %}
+        {% block html5forms %}{% endblock %}
+        {% include 'custom.html.twig' %}
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

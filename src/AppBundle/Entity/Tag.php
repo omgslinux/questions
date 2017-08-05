@@ -3,15 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\Question;
 
 /**
- * Answer
+ * Tag
  *
- * @ORM\Table(name="answer")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\AnswerRepository")
+ * @ORM\Table(name="tag")
+ * @ORM\Entity
  */
-class Answer
+class Tag
 {
     /**
      * @var int
@@ -30,20 +29,12 @@ class Answer
     private $text;
 
     /**
-     * @var Question
+     * @var Task
      *
-     * @ORM\ManyToOne(targetEntity="Question", inversedBy="answers")
+     * @ORM\ManyToOne(targetEntity="Task", inversedBy="tags")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $question;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $valid;
-
+    private $task;
 
     /**
      * Get id
@@ -60,7 +51,7 @@ class Answer
      *
      * @param string $text
      *
-     * @return Answer
+     * @return Tag
      */
     public function setText($text)
     {
@@ -80,55 +71,32 @@ class Answer
     }
 
     /**
-     * Set question
+     * Set task
      *
-     * @param Question $question
+     * @param Task $task
      *
-     * @return Answer
+     * @return Tag
      */
-    public function setQuestion(Question $question)
+    public function setTask(Task $task)
     {
-        $this->question = $question;
+        $this->task = $task;
 
         return $this;
     }
 
     /**
-     * Get question
+     * Get task
      *
-     * @return Question
+     * @return Task
      */
-    public function getQuestion()
+    public function getTask()
     {
-        return $this->question;
-    }
-
-    /**
-     * Set valid
-     *
-     * @param boolean $valid
-     *
-     * @return Answer
-     */
-    public function setValid($valid)
-    {
-        $this->valid = $valid;
-
-        return $this;
-    }
-
-    /**
-     * Is valid
-     *
-     * @return bool
-     */
-    public function isValid()
-    {
-        return $this->valid;
+        return $this->task;
     }
 
     public function __toString()
     {
         return $this->getText();
     }
+
 }

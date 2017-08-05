@@ -3,15 +3,16 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Entity\Question;
 
 /**
- * Answer
+ * Rol
  *
- * @ORM\Table(name="answer")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\AnswerRepository")
+ * @ORM\Table(name="rol")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RolRepository")
  */
-class Answer
+class Rol
 {
     /**
      * @var int
@@ -30,12 +31,20 @@ class Answer
     private $text;
 
     /**
-     * @var Question
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Question", inversedBy="answers")
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="User", mappedBy="rol")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $question;
+    private $users;
 
     /**
      * @var bool
@@ -80,27 +89,64 @@ class Answer
     }
 
     /**
-     * Set question
+     * Set description
      *
-     * @param Question $question
+     * @param string $description
      *
-     * @return Answer
+     * @return Rol
      */
-    public function setQuestion(Question $question)
+    public function setDescription($text)
     {
-        $this->question = $question;
+        $this->description = $text;
 
         return $this;
     }
 
     /**
-     * Get question
+     * Get description
      *
-     * @return Question
+     * @return string
      */
-    public function getQuestion()
+    public function getDescription()
     {
-        return $this->question;
+        return $this->description;
+    }
+
+    /**
+     * Set user
+     *
+     * @param User $user
+     *
+     * @return Rol
+     */
+    public function addUser(User $user)
+    {
+        $this->users->add($user);
+        $user->setRol($this);
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * Remove user
+     *
+     * @return Rol
+     */
+    public function removeUser(User $user)
+    {
+        $this->users->removeElement($user);
+
+        return $this;
     }
 
     /**
@@ -129,6 +175,6 @@ class Answer
 
     public function __toString()
     {
-        return $this->getText();
+        return $this->getDescription();
     }
 }

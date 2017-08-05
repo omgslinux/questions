@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Questiones list</h1>
+    <h1>Users list</h1>
 
     <table>
         <thead>
@@ -12,12 +12,12 @@
             </tr>
         </thead>
         <tbody>
-        {% for question in questions %}
+        {% for user in users %}
             <tr>
-                <td><a href="{{ path('question_show', { 'id': question.id }) }}">{{ question.id }}</a></td>
-                <td>{{ question.text }}</td>
-                <td>{% for answer in question.answers %}
-                    <p>{{ answer }} -&gt; {{ answer.valid ? 'X' : '-' }} </p>
+                <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
+                <td>{{ user.text }}</td>
+                <td>{% for role in user.roles %}
+                    <p>{{ role }} -&gt; {{ role.valid ? 'X' : '-' }} </p>
                     {% endfor %}
                 </td>
             </tr>
@@ -27,7 +27,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('question_new') }}">Create a new question</a>
+            <a href="{{ path('user_new') }}">Create a new User</a>
         </li>
     </ul>
 {% endblock %}

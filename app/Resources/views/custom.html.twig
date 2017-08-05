@@ -1,0 +1,47 @@
+{% block crudform %}
+{% if create_form is defined %}
+<div class="form">
+{{ form_start(create_form) }}
+<div class="form-group">
+    {{ form_widget(create_form) }}
+    <input type="submit" value="Guardar"  class="btn btn-success"/>
+</div>
+{{ form_end(create_form) }}
+{% else %}
+  {% if edit_form is defined %}
+{{ form_start(edit_form) }}
+<div class="form-group">
+    {{ form_widget(edit_form) }}
+    <input type="submit" value="Guardar"  class="btn btn-success"/>
+</div>
+{{ form_end(edit_form) }}
+</div>
+    {% if delete_form is defined %}
+{{ form_start(delete_form) }}
+    {{ form_widget(delete_form) }}
+    <input type="submit" value="Borrar" class="btn btn-danger"/>
+{{ form_end(delete_form) }}
+    {% endif %}
+  {% endif %}
+{% endif %}
+{% endblock %}
+
+{% block jquery %}
+<script type="text/javascript" src="{{ asset('shared/js/jquery-3.1.1.min.js') }}">
+</script>
+{% endblock %}
+
+{% block bootstrap %}
+        <script type="text/javascript" src="{{ asset('shared/js/bootstrap.min.js') }}">
+        </script>
+{% endblock %}
+{% block modernizr %}
+<!-- Needed for Forms Feature Detection -->
+        <script type="text/javascript" src="{{ asset('shared/js/modernizr.com/Modernizr-2.5.3.forms.js') }}">
+        </script>
+{% endblock %}
+{% block html5forms %}
+        <!-- Needed for Validation -->
+        <script type="text/javascript" src="{{ asset('shared/js/html5Forms.js') }}" data-webforms2-support="date" data-webforms2-force-js-validation="true" data-lang="qq">
+        </script>
+{% endblock %}
