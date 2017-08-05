@@ -96,6 +96,10 @@ class QuestionController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em=$this->getDoctrine()->getManager();
             $em->persist($question);
+            foreach ($question->getAnswers() as $answer) {
+                $answer->setQuestion($question);
+                $em->persist($answer);
+            }
             $em->flush();
 
             return $this->redirectToRoute('question_edit', array('id' => $question->getId()));
