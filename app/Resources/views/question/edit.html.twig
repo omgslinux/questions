@@ -3,14 +3,20 @@
 {% block body %}
     <h1>Question edit</h1>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <ul class="answers" data-prototype="{{ form_widget(edit_form.answers.vars.prototype)|e('html_attr') }}">
-        {{ form_row(edit_form.answers )}}
-        </ul>
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+    {{ form_start(form) }}
+        {# render the task's only field: description #}
+        {{ form_row(form.text) }}
 
+        <h3>Answers</h3>
+        <ul class="answers" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">
+            {# iterate over each existing tag and render its only field: name #}
+            {% for answer in form.answers %}
+                <li>{{ form_row(answer) }}</li>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="Guardar">
+        {% block jsblock %}{% endblock %}
+    {{ form_end(form) }}
     <ul>
         <li>
             <a href="{{ path('question_index') }}">Back to the list</a>

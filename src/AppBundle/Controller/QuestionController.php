@@ -61,7 +61,7 @@ class QuestionController extends Controller
 
         return $this->render('question/new.html.twig', array(
             'question' => $question,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ));
     }
 
@@ -94,15 +94,19 @@ class QuestionController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($question);
+            $em->flush();
 
             return $this->redirectToRoute('question_edit', array('id' => $question->getId()));
         }
 
         return $this->render('question/edit.html.twig', array(
             'question' => $question,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'jsfieldname' => 'answer',
+            'jsfieldlabel' => 'respuesta'
         ));
     }
 

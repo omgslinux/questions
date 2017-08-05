@@ -32,7 +32,7 @@ class Task
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Tag", mappedBy="task")
+     * @ORM\OneToMany(targetEntity="Tag", mappedBy="task", cascade={"persist"})
      */
     private $tags;
 
@@ -41,7 +41,7 @@ class Task
     {
         $this->tags=new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *

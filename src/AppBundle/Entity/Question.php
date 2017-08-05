@@ -33,11 +33,16 @@ class Question
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Answer", mappedBy="question")
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="question", cascade={"persist"})
      */
     private $answers;
 
     private $count;
+
+    public function __construct()
+    {
+        $this->answers=new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -110,21 +115,6 @@ class Question
         $this->answers->removeElement($answer);
 
         return $this;
-    }
-
-    /**
-     * Get count
-     *
-     * @return integer
-     */
-    public function getCount()
-    {
-        return strlen($this->getText());
-    }
-
-    public function __toString()
-    {
-        return $this->getText();
     }
 
 }

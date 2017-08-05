@@ -32,7 +32,7 @@ class Answer
     /**
      * @var Question
      *
-     * @ORM\ManyToOne(targetEntity="Question", inversedBy="answers")
+     * @ORM\ManyToOne(targetEntity="Question", inversedBy="answers", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $question;

@@ -21,7 +21,7 @@ class TaskController extends Controller
      * Lists all question entities.
      *
      * @Route("/", name="task_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
     {
@@ -37,10 +37,16 @@ class TaskController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             // ... maybe do some form processing, like saving the Task and Tag objects
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($task);
+            $em->flush();
+
         }
 
         return $this->render('task/new.html.twig', array(
             'form' => $form->createView(),
+            'jsfieldname' => 'tag',
+            'jsfieldlabel' => 'etiqueta'
         ));
     }
 }
