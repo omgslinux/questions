@@ -3,10 +3,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Question;
+use AppBundle\Form\AnswerType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
  * Question controller.
@@ -59,7 +61,7 @@ class QuestionController extends Controller
             return $this->redirectToRoute('question_show', array('id' => $question->getId()));
         }
 
-        return $this->render('question/new.html.twig', array(
+        return $this->render('question/edit.html.twig', array(
             'question' => $question,
             'form' => $form->createView()
         ));
@@ -91,14 +93,28 @@ class QuestionController extends Controller
     {
         $deleteForm = $this->createDeleteForm($question);
         $editForm = $this->createForm('AppBundle\Form\QuestionType', $question);
+        $editForm
+        ->add('answers', CollectionType::class, array(
+          'entry_type' => AnswerType::class,
+          'allow_add' => true,
+          'allow_delete' => true
+        ))
+        ;
+
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em=$this->getDoctrine()->getManager();
             $em->persist($question);
             foreach ($question->getAnswers() as $answer) {
-                $answer->setQuestion($question);
-                $em->persist($answer);
+                if ($answer->isDelete()==true) {
+                    $em->remove($answer);
+                    $question->removeAnswer($answer);
+                    //$em->remove($answer);
+                } else {
+                    $answer->setQuestion($question);
+                    $em->persist($answer);
+                }
             }
             $em->flush();
 
@@ -127,11 +143,15 @@ class QuestionController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            foreach ($question->getAnswers() as $answer) {
+                $em->remove($answer);
+                $question->removeAnswer($answer);
+            }
             $em->remove($question);
             $em->flush();
         }
 
-        return $this->redirectToRoute('questions_index');
+        return $this->redirectToRoute('question_index');
     }
 
     /**

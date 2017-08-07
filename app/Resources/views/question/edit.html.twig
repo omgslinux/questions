@@ -5,26 +5,33 @@
 
     {{ form_start(form) }}
         {# render the task's only field: description #}
-        {{ form_row(form.text) }}
+        {{ form_widget(form.text) }}
+          {{ form_start(delete_form) }}
+              <input type="submit" value="Delete">
+          {{ form_end(delete_form) }}
+
+        {{ dump(form) }}
+        {% if form.answers.vars is defined %}
 
         <h3>Answers</h3>
         <ul class="answers" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">
+          <table class="table tabler-bordered">
+          <thead>
+            <tr><th>Respuesta</th><th>¿Correcta?</th><th>¿Borrar?</th></tr>
             {# iterate over each existing tag and render its only field: name #}
             {% for answer in form.answers %}
-                <li>{{ form_row(answer) }}</li>
+              <tr>
+                <td>{{ form_widget(answer.text) }}</td><td>{{ form_widget(answer.valid) }}</td><td>{{ form_widget(answer.delete )}}</td>
+              </tr>
             {% endfor %}
+          </table>
         </ul>
         <input type="submit" value="Guardar">
-        {% block jsblock %}{% endblock %}
+        {% block jsform %}{% endblock %}
     {{ form_end(form) }}
-    <ul>
-        <li>
-            <a href="{{ path('question_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    {% else %}
+        <input type="submit" value="Guardar">
+    {{ form_end(form) }}
+    {% endif %}
+      <a href="{{ path('question_index') }}">Back to the list</a>
 {% endblock %}

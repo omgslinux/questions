@@ -35,11 +35,7 @@
         <script type="text/javascript" src="{{ asset('shared/js/bootstrap.min.js') }}">
         </script>
 {% endblock %}
-{% block modernizr %}
-<!-- Needed for Forms Feature Detection -->
-        <script type="text/javascript" src="{{ asset('shared/js/modernizr.com/Modernizr-2.5.3.forms.js') }}">
-        </script>
-{% endblock %}
+
 {% block html5forms %}
         <!-- Needed for Validation -->
         <script type="text/javascript" src="{{ asset('shared/js/html5Forms.js') }}" data-webforms2-support="date" data-webforms2-force-js-validation="true" data-lang="qq">
@@ -56,6 +52,7 @@ var $collectionHolder;
 var $addTagLink = $('<a href="#" class="add_{{ jsfieldname }}_link">{% trans %}Add{% endtrans %} {{ jsfieldlabel }}</a>');
 //var $addTagLink = $('<input type="submit" href="#" class="add_{{ jsfieldname }}_link">{% trans %}Add{% endtrans %} {{ jsfieldlabel }}</a>');
 var $newLinkLi = $('<li></li>').append($addTagLink);
+//var $newLinkLi = $('<td></td>').append($addTagLink);
 
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of {{ jsfieldname }}s
@@ -92,10 +89,13 @@ function addTagForm($collectionHolder, $newLinkLi) {
     $collectionHolder.data('index', index + 1);
 
     // Display the form in the page in an li, before the "Add a {{ jsfieldname }}" link li
-    var $newFormLi = $('<li></li>').append(newForm);
+    var $newFormLi = $('<tr></tr>').append(newForm);
 
     // also add a remove button, just for this example
     $newFormLi.append('<a href="#" class="remove-{{ jsfieldname }}">x</a>');
+    //$newFormLi.append('<td><div class="checkbox"> <label><input type="checkbox" id="appbundle_questions_{{ jsfieldname }}__name__delete" name="appbundle_questions[{{ jsfieldname }}][name][delete]" /></td>');
+
+    //var newFormLi = prototype.replace(/__name__/g, index);
 
     $newLinkLi.before($newFormLi);
 

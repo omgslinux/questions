@@ -44,6 +44,8 @@ class Answer
      */
     private $valid;
 
+    private $delete;
+
 
     /**
      * Get id
@@ -125,6 +127,30 @@ class Answer
     public function isValid()
     {
         return $this->valid;
+    }
+
+    /**
+     * Set delete
+     *
+     * @param boolean $delete
+     *
+     * @return Answer
+     */
+    public function setDelete($bool)
+    {
+        $this->delete = $bool;
+
+        return $this;
+    }
+
+    /**
+     * Is delete
+     *
+     * @return bool
+     */
+    public function isDelete()
+    {
+        return $this->delete;
     }
 
     public function __toString()

@@ -4,6 +4,8 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Entity\Question;
@@ -16,8 +18,21 @@ class AnswerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('text')
-        ->add('valid');
+        ->add('text', TextType::class, array(
+          'label' => 'Answer',
+          'attr' => array(
+            'size' => 50
+          )
+        ))
+        ->add('valid', CheckboxType::class, array(
+          'required' => false,
+          'label' => ' '
+        )
+        )
+        ->add('delete', CheckboxType::class, array(
+          'required' => false,
+          'label' => ' '
+        ));
     }
 
     /**
