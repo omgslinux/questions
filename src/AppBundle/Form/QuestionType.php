@@ -17,14 +17,23 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('text', TextareaType::class, array(
+        ->add('text', TextType::class, array(
           'label' => 'Question',
-          'attr' => array(
-            'rows' => 3,
-            'cols' => 80
-          )
         ))
         ;
+        foreach ($options as $option => $value) {
+          if ($option=='showAnswers' and $value===true) {
+            $builder
+            ->add('answers', CollectionType::class, array(
+              'entry_type' => AnswerType::class,
+              'allow_add' => true,
+              'allow_delete' => true
+              )
+            )
+            ;
+          }
+
+        }
     }
 
     /**
@@ -33,7 +42,8 @@ class QuestionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Question'
+            'data_class' => 'AppBundle\Entity\Question',
+            'showAnswers' => false,
         ));
     }
 

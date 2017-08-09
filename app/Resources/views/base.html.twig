@@ -3,15 +3,20 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}" />
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css')}}" />
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+      <div class="container-fluid">
         {% block jquery %}{% endblock %}
         {% block bootstrap %}{% endblock %}
         {% block html5forms %}{% endblock %}
         {% include 'custom.html.twig' %}
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+      </div>
     </body>
 </html>

@@ -4,7 +4,11 @@
     <h1>Question creation</h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
+    <div class="row">
+      <div class="col-md-8">
+        {{ form_widget(form.text) }}
+      </div>
+    </div>
         <input type="submit" value="Create" />
     {{ form_end(form) }}
 

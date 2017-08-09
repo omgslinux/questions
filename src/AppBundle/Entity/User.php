@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Entity\Answer;
+use AppBundle\Entity\Traits\ActivableEntityTrait;
 
 /**
  * User
@@ -14,6 +15,7 @@ use AppBundle\Entity\Answer;
  */
 class User
 {
+    Use ActivableEntityTrait;
     /**
      * @var int
      *

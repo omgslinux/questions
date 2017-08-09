@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Question edit</h1>
+    <h3>Question edit</h3>
 
     {{ form_start(form) }}
-        {# render the task's only field: description #}
-        {{ form_widget(form.text) }}
-          {{ form_start(delete_form) }}
-              <input type="submit" value="Delete">
-          {{ form_end(delete_form) }}
 
-        {{ dump(form) }}
-        {% if form.answers.vars is defined %}
+    <div class="row">
+      <div class="col-md-6">
+        {{ form_row(form.text) }}
+      </div>
+    </div>
+
+        {% if form.answers is defined %}
 
         <h3>Answers</h3>
         <ul class="answers" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">
@@ -29,6 +29,9 @@
         <input type="submit" value="Guardar">
         {% block jsform %}{% endblock %}
     {{ form_end(form) }}
+    {{ form_start(delete_form) }}
+        <input type="submit" value="Delete">
+    {{ form_end(delete_form) }}
     {% else %}
         <input type="submit" value="Guardar">
     {{ form_end(form) }}

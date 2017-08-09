@@ -10,16 +10,33 @@ namespace AppBundle\Repository;
  */
 class QuestionRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findbynumletter($numLetter)
+    public function findBynumletter($numLetter)
     {
-        $questionsRepository = $this->getRepository('AppBundle:Question');
-        $queryBuilder = $questionsRepository->createQueryBuilder('q');
-        $queryBuilder
+        //$questionsRepository = $this->get('AppBundle:Question');
+        $qb = $this->createQueryBuilder('q');
+        $qb
+            ->select('q')
             ->andWhere('CHAR_LENGTH(q.text) = :numletter')
             ->setParameter('numletter', $numLetter)
         ;
-        $query = $queryBuilder->getQuery();
+        $query = $qb->getQuery();
         return $query->getResult();
 
     }
+
+    public function findBynumwords($numWords)
+    {
+        //$questionsRepository = $this->get('AppBundle:Question');
+        $qb = $this->createQueryBuilder('q');
+        $qb
+            ->select('q')
+            //->andWhere('(LENGTH(text) - LENGTH(replace(text, " ", "")))+1 = :numwords')
+            ->andWhere('WORD_COUNT(q.text) = :numwords')
+          ->setParameter('numwords', $numWords)
+        ;
+        $query = $qb->getQuery();
+        return $query->getResult();
+
+    }
+
 }

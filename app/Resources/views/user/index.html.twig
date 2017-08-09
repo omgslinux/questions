@@ -6,20 +6,15 @@
     <table>
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Text</th>
-                <th>Respuestas</th>
+                <th>Usuario</th>
+                <th>Activo</th>
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
             <tr>
-                <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
-                <td>{{ user.text }}</td>
-                <td>{% for role in user.roles %}
-                    <p>{{ role }} -&gt; {{ role.valid ? 'X' : '-' }} </p>
-                    {% endfor %}
-                </td>
+                <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.text }}</a></td>
+                <td>{{ user.rol }} -&gt; {{ user.active ? 'X' : '-' }}</td>
             </tr>
         {% endfor %}
         </tbody>

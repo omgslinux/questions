@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * Question controller.
@@ -28,13 +29,8 @@ class QuestionController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $questionsRepository = $em->getRepository('AppBundle:Question');
-        $queryBuilder = $questionsRepository->createQueryBuilder('q');
-        $queryBuilder
-            ->andWhere('CHAR_LENGTH(q.text) > :minLength')
-            ->setParameter('minLength', 1)
-        ;
-        $query = $queryBuilder->getQuery();
-        $questions = $query->getResult();
+        //$questions = $questionsRepository->findBynumletter(14);
+        $questions = $questionsRepository->findBynumwords(3);
 
         return $this->render('question/index.html.twig', array(
             'questions' => $questions,
@@ -92,14 +88,7 @@ class QuestionController extends Controller
     public function editAction(Request $request, Question $question)
     {
         $deleteForm = $this->createDeleteForm($question);
-        $editForm = $this->createForm('AppBundle\Form\QuestionType', $question);
-        $editForm
-        ->add('answers', CollectionType::class, array(
-          'entry_type' => AnswerType::class,
-          'allow_add' => true,
-          'allow_delete' => true
-        ))
-        ;
+        $editForm = $this->createForm('AppBundle\Form\QuestionType', $question, ['showAnswers' => true]);
 
         $editForm->handleRequest($request);
 
@@ -112,7 +101,7 @@ class QuestionController extends Controller
                     $question->removeAnswer($answer);
                     //$em->remove($answer);
                 } else {
-                    $answer->setQuestion($question);
+                    //$answer->setQuestion($question);
                     $em->persist($answer);
                 }
             }
