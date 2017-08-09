@@ -17,22 +17,20 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('text', TextType::class, array(
-          'label' => 'Question',
-        ))
+            ->add('text', TextType::class, [
+                    'label' => 'Question',
+            ])
         ;
-        foreach ($options as $option => $value) {
-          if ($option=='showAnswers' and $value===true) {
-            $builder
-            ->add('answers', CollectionType::class, array(
-              'entry_type' => AnswerType::class,
-              'allow_add' => true,
-              'allow_delete' => true
-              )
-            )
-            ;
-          }
 
+        if ($options['showAnswers']) {
+            $builder
+                ->add('answers', CollectionType::class, [
+                    'entry_type' => AnswerType::class,
+                    'by_reference' => false,
+                    'allow_add' => true,
+                    'allow_delete' => true
+                ])
+            ;
         }
     }
 
@@ -54,6 +52,4 @@ class QuestionType extends AbstractType
     {
         return 'appbundle_questions';
     }
-
-
 }
