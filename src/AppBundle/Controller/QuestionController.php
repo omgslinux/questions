@@ -30,7 +30,7 @@ class QuestionController extends Controller
 
         $questionsRepository = $em->getRepository('AppBundle:Question');
         //$questions = $questionsRepository->findBynumletter(14);
-        $questions = $questionsRepository->findBynumwords(3);
+        $questions = $questionsRepository->findBynumwords(1);
 
         return $this->render('question/index.html.twig', array(
             'questions' => $questions,
@@ -91,20 +91,11 @@ class QuestionController extends Controller
         $editForm = $this->createForm('AppBundle\Form\QuestionType', $question, ['showAnswers' => true]);
 
         $editForm->handleRequest($request);
-
+dump($request->getMethod());dump($editForm->isSubmitted());
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em=$this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
+            dump($question);
             $em->persist($question);
-            foreach ($question->getAnswers() as $answer) {
-                if ($answer->isDelete()==true) {
-                    $em->remove($answer);
-                    $question->removeAnswer($answer);
-                    //$em->remove($answer);
-                } else {
-                    //$answer->setQuestion($question);
-                    $em->persist($answer);
-                }
-            }
             $em->flush();
 
             return $this->redirectToRoute('question_edit', array('id' => $question->getId()));
