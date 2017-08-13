@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{% trans %}Welcome to this test app{% endtrans %}</h1>
+
+    {{ form_start(form) }}
+    <div class="row">
+      <div class="col-md4">{{ form_row(form._username) }}</div>
+      <div class="col-md4">{{ form_row(form._password) }}</div>
+      <div class="col-md4">{{ form_row(form.login) }}</div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}

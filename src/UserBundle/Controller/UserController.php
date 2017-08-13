@@ -1,11 +1,12 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace UserBundle\Controller;
 
-use AppBundle\Entity\User;
+use UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * User controller.
@@ -24,7 +25,7 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $usersRepository = $em->getRepository('AppBundle:User');
+        $usersRepository = $em->getRepository('UserBundle:User');
         $queryBuilder = $usersRepository->createQueryBuilder('q');
         $queryBuilder
             ->andWhere('CHAR_LENGTH(q.text) > :minLength')
@@ -33,7 +34,7 @@ class UserController extends Controller
         $query = $queryBuilder->getQuery();
         $users = $query->getResult();
 
-        return $this->render('user/index.html.twig', array(
+        return $this->render('@UserBundle/user/index.html.twig', array(
             'users' => $users,
         ));
     }
@@ -47,7 +48,7 @@ class UserController extends Controller
     public function newAction(Request $request)
     {
         $user = new user();
-        $form = $this->createForm('AppBundle\Form\UserType', $user);
+        $form = $this->createForm('UserBundle\Form\UserType', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -58,7 +59,7 @@ class UserController extends Controller
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
 
-        return $this->render('user/new.html.twig', array(
+        return $this->render('@UserBundle/user/new.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
         ));
@@ -74,7 +75,7 @@ class UserController extends Controller
     {
         $deleteForm = $this->createDeleteForm($user);
 
-        return $this->render('user/show.html.twig', array(
+        return $this->render('@UserBundle/user/show.html.twig', array(
             'user' => $user,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -89,7 +90,7 @@ class UserController extends Controller
     public function editAction(Request $request, User $user)
     {
         $deleteForm = $this->createDeleteForm($user);
-        $editForm = $this->createForm('AppBundle\Form\UserType', $user, ['showStudent' => true]);
+        $editForm = $this->createForm('UserBundle\Form\UserType', $user, ['showStudent' => true]);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -98,7 +99,7 @@ class UserController extends Controller
             return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
         }
 
-        return $this->render('user/edit.html.twig', array(
+        return $this->render('@UserBundle/user/edit.html.twig', array(
             'user' => $user,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -9,7 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use AppBundle\Entity\Rol;
+use UserBundle\Entity\Rol;
+use UserBundle\Form\SecurityType;
 use Doctrine\ORM\EntityRepository;
 
 class UserType extends AbstractType
@@ -45,6 +46,18 @@ class UserType extends AbstractType
           )
         )
         ;
+        if ($options['showSecurity']) {
+          $builder
+          ->add('securities', CollectionType::class,
+            [
+              'label' => 'From user',
+              'entry_type' => SecurityType::class,
+              'allow_add' => true,
+              'by_reference' => false,
+            ]
+          )
+          ;
+        }
     }
 
     /**
@@ -53,8 +66,9 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\User',
+            'data_class' => 'UserBundle\Entity\User',
             'showStudent' => true,
+            'showSecurity' => true
         ));
     }
 
@@ -63,7 +77,7 @@ class UserType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_questions';
+        return 'userbundle_questions';
     }
 
 

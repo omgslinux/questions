@@ -1,16 +1,16 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use AppBundle\Entity\Question;
+use UserBundle\Entity\Question;
 
 /**
  * Rol
  *
  * @ORM\Table(name="rol")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\RolRepository")
+ * @ORM\Entity(repositoryClass="UserBundle\Repository\RolRepository")
  */
 class Rol
 {

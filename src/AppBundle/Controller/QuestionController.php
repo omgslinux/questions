@@ -30,7 +30,7 @@ class QuestionController extends Controller
 
         $questionsRepository = $em->getRepository('AppBundle:Question');
         //$questions = $questionsRepository->findBynumletter(14);
-        $questions = $questionsRepository->findBynumwords(1);
+        $questions = $questionsRepository->findAll(); //findBynumwords(1);
 
         return $this->render('question/index.html.twig', array(
             'questions' => $questions,
@@ -91,10 +91,16 @@ class QuestionController extends Controller
         $editForm = $this->createForm('AppBundle\Form\QuestionType', $question, ['showAnswers' => true]);
 
         $editForm->handleRequest($request);
-dump($request->getMethod());dump($editForm->isSubmitted());
+//dump($request->getMethod());dump($editForm->isSubmitted());
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            dump($question);
+            //dump($question);
+            foreach ($question->getAnswers() as $answer) {
+              if ($answer->isDelete()) {
+                  $em->remove($answer);
+                  $question->removeAnswer($answer);
+              }
+            }
             $em->persist($question);
             $em->flush();
 
@@ -123,10 +129,6 @@ dump($request->getMethod());dump($editForm->isSubmitted());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            foreach ($question->getAnswers() as $answer) {
-                $em->remove($answer);
-                $question->removeAnswer($answer);
-            }
             $em->remove($question);
             $em->flush();
         }

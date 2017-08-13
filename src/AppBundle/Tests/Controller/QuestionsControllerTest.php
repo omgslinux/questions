@@ -6,20 +6,23 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class QuestionsControllerTest extends WebTestCase
 {
-    /*
+
     public function testCompleteScenario()
     {
         // Create a new client to browse the application
+        $formname='appbundle_questions';
+        $formfieldname='text';
+        $buttonname=$formname.'['.$formfieldname.']';
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/questions/');
+        $crawler = $client->request('GET', '/question/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /questions/");
-        $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
+        $crawler = $client->click($crawler->selectLink('Create a new question')->link());
 
         // Fill in the form and submit it
-        $form = $crawler->selectButton('Create')->form(array(
-            'appbundle_questions[field_name]'  => 'Test',
+        $form = $crawler->selectButton('Guardar')->form(array(
+            $buttonname  => 'Test',
             // ... other fields to fill
         ));
 
@@ -30,10 +33,10 @@ class QuestionsControllerTest extends WebTestCase
         $this->assertGreaterThan(0, $crawler->filter('td:contains("Test")')->count(), 'Missing element td:contains("Test")');
 
         // Edit the entity
-        $crawler = $client->click($crawler->selectLink('Edit')->link());
+        $crawler = $client->click($crawler->selectLink('Test')->link());
 
-        $form = $crawler->selectButton('Update')->form(array(
-            'appbundle_questions[field_name]'  => 'Foo',
+        $form = $crawler->selectButton('Guardar')->form(array(
+            $buttonname  => 'Foo',
             // ... other fields to fill
         ));
 
@@ -51,5 +54,5 @@ class QuestionsControllerTest extends WebTestCase
         $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
     }
 
-    */
+
 }

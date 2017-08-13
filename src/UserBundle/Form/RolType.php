@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Form;
+namespace UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use AppBundle\Entity\Question;
+use UserBundle\Entity\Question;
 
 class RolType extends AbstractType
 {
@@ -26,7 +26,7 @@ class RolType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Rol'
+            'data_class' => 'UserBundle\Entity\Rol'
         ));
     }
 
@@ -35,7 +35,7 @@ class RolType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_answer';
+        return 'userbundle_answer';
     }
 
 
