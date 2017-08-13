@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\Question;
 
 /**
  * Answer
@@ -43,9 +42,6 @@ class Answer
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $valid;
-
-    private $delete;
-
 
     /**
      * Get id
@@ -127,30 +123,6 @@ class Answer
     public function isValid()
     {
         return $this->valid;
-    }
-
-    /**
-     * Set delete
-     *
-     * @param boolean $delete
-     *
-     * @return Answer
-     */
-    public function setDelete($bool)
-    {
-        $this->delete = $bool;
-
-        return $this;
-    }
-
-    /**
-     * Is delete
-     *
-     * @return bool
-     */
-    public function isDelete()
-    {
-        return $this->delete;
     }
 
     public function __toString()

@@ -7,8 +7,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use AppBundle\Entity\Question;
 
 class AnswerType extends AbstractType
 {
@@ -18,21 +16,15 @@ class AnswerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('text', TextType::class, array(
-          'label' => 'Answer',
-          'attr' => array(
-            'size' => 50
-          )
-        ))
-        ->add('valid', CheckboxType::class, array(
-          'required' => false,
-          'label' => ' '
-        )
-        )
-        ->add('delete', CheckboxType::class, array(
-          'required' => false,
-          'label' => ' '
-        ));
+            ->add('text', TextType::class, [
+                'label' => 'Answer',
+                'attr' => ['size' => 50]
+            ])
+            ->add('valid', CheckboxType::class, [
+                'required' => false,
+                'label' => ' '
+            ])
+        ;
     }
 
     /**
@@ -52,6 +44,4 @@ class AnswerType extends AbstractType
     {
         return 'appbundle_answer';
     }
-
-
 }

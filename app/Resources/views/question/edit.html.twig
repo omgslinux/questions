@@ -4,37 +4,44 @@
     <h3>Question edit</h3>
 
     {{ form_start(form) }}
-
-    <div class="row">
-      <div class="col-md-6">
-        {{ form_row(form.text) }}
-      </div>
-    </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.text) }}
+            </div>
+        </div>
 
         {% if form.answers is defined %}
+            <h3>Answers <a href="#" id="add-answer" class="btn btn-default"> + Nueva </a></h3>
+            <table id="answers-container" class="table tabler-bordered" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">
+                <thead>
+                    <tr>
+                        <th>Respuesta</th>
+                        <th>¿Correcta?</th>
+                        <th>¿Borrar?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for answer in form.answers %}
+                        {{ form_widget(answer) }}
+                    {% endfor %}
+                    {% do form.answers.setRendered %}
+                </tbody>
+            </table>
+        {% endif %}
 
-        <h3>Answers</h3>
-        <ul class="answers" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">
-          <table class="table tabler-bordered">
-          <thead>
-            <tr><th>Respuesta</th><th>¿Correcta?</th><th>¿Borrar?</th></tr>
-            {# iterate over each existing tag and render its only field: name #}
-            {% for answer in form.answers %}
-              <tr>
-                <td>{{ form_widget(answer.text) }}</td><td>{{ form_widget(answer.valid) }}</td><td>{{ form_widget(answer.delete )}}</td>
-              </tr>
-            {% endfor %}
-          </table>
-        </ul>
-        <input type="submit" value="Guardar">
-        {% block jsform %}{% endblock %}
-    {{ form_end(form) }}
-    {{ form_start(delete_form) }}
-        <input type="submit" value="Delete">
-    {{ form_end(delete_form) }}
-    {% else %}
         <input type="submit" value="Guardar">
     {{ form_end(form) }}
+
+    {% if form.answers is defined %}
+        {{ form_start(delete_form) }}
+            <input type="submit" value="Delete">
+        {{ form_end(delete_form) }}
     {% endif %}
-      <a href="{{ path('question_index') }}">Back to the list</a>
+
+    <a href="{{ path('question_index') }}">Back to the list</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/questions.js') }}"></script>
 {% endblock %}

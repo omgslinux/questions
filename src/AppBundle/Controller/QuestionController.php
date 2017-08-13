@@ -91,16 +91,9 @@ class QuestionController extends Controller
         $editForm = $this->createForm('AppBundle\Form\QuestionType', $question, ['showAnswers' => true]);
 
         $editForm->handleRequest($request);
-//dump($request->getMethod());dump($editForm->isSubmitted());
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            //dump($question);
-            foreach ($question->getAnswers() as $answer) {
-              if ($answer->isDelete()) {
-                  $em->remove($answer);
-                  $question->removeAnswer($answer);
-              }
-            }
+
             $em->persist($question);
             $em->flush();
 
@@ -111,8 +104,6 @@ class QuestionController extends Controller
             'question' => $question,
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-            'jsfieldname' => 'answer',
-            'jsfieldlabel' => 'respuesta'
         ));
     }
 
