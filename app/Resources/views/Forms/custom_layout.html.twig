@@ -1,1 +1,9 @@
 {% extends 'bootstrap_3_layout.html.twig' %}
+
+{% block appbundle_answer_widget %}
+    <tr>
+        <td>{{ form_widget(form.text) }}</td>
+        <td>{{ form_widget(form.valid) }}</td>
+        <td><a href="#" class="delete-answer btn btn-danger">X</a></td>
+    </tr>
+{%- endblock appbundle_answer_widget %}

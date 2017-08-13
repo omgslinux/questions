@@ -4,7 +4,6 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use AppBundle\Entity\Answer;
 
 /**
  * Question
@@ -33,11 +32,9 @@ class Question
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Answer", mappedBy="question", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="question", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $answers;
-
-    private $count;
 
     public function __construct()
     {
