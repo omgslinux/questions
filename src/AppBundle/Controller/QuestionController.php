@@ -100,6 +100,9 @@ class QuestionController extends Controller
 
             return $this->redirectToRoute('question_edit', array('id' => $question->getId()));
         }
+        $foo=$question->getAnswers();
+
+        dump($foo,$question);
 
         return $this->render('question/edit.html.twig', array(
             'question' => $question,

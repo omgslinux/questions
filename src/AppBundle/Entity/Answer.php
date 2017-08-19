@@ -111,9 +111,6 @@ class Answer
     public function setValid($valid)
     {
         $this->valid = $valid;
-        if ($this->isValid()) {
-            $this->question->addValidAnswer($this);
-        }
 
         return $this;
     }

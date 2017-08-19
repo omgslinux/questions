@@ -120,19 +120,6 @@ class Question
 
         return $this;
     }
-    /**
-     * Add answer
-     *
-     * @param Answer $answer
-     *
-     * @return Question
-     */
-    public function addValidAnswer(Answer $answer)
-    {
-        $this->validAnswers->add($answer);
-
-        return $this;
-    }
 
     /**
      * Get answers
@@ -141,6 +128,12 @@ class Question
      */
     public function getValidAnswers()
     {
+        $this->validAnswers=[];
+        foreach ($this->getAnswers() as $answer) {
+            if ($answer->isValid()) {
+                $this->validAnswers[]=[$answer->getId() => $answer->getText()];
+            }
+        }
         return $this->validAnswers;
     }
 
