@@ -48,6 +48,7 @@ class QuestionController extends Controller
         $question = new Question();
         $form = $this->createForm('AppBundle\Form\QuestionType', $question);
         $form->handleRequest($request);
+        //dump($form);die();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();

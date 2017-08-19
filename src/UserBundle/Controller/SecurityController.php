@@ -27,10 +27,9 @@ class SecurityController extends Controller
         $form = $this->createForm('UserBundle\Form\SecurityType', $security, ['showLogin' => true]);
         $form->handleRequest($request);
 
-        return $this->render('security/login.html.twig', array(
+        return $this->render('@UserBundle/security/login.html.twig', array(
             'last_username' => $lastUsername,
             'error'         => $error,
-            'security'      => $security,
             'form'          => $form->createView()
         ));
     }

@@ -36,9 +36,16 @@ class Question
      */
     private $answers;
 
+    /**
+     * @var ArrayCollection
+     *
+     */
+    private $validAnswers;
+
     public function __construct()
     {
         $this->answers=new ArrayCollection();
+        $this->validAnswers=new ArrayCollection();
     }
 
     /**
@@ -113,5 +120,29 @@ class Question
 
         return $this;
     }
+    /**
+     * Add answer
+     *
+     * @param Answer $answer
+     *
+     * @return Question
+     */
+    public function addValidAnswer(Answer $answer)
+    {
+        $this->validAnswers->add($answer);
+
+        return $this;
+    }
+
+    /**
+     * Get answers
+     *
+     * @return string
+     */
+    public function getValidAnswers()
+    {
+        return $this->validAnswers;
+    }
+
 
 }

@@ -11,24 +11,24 @@
         </div>
 
         {% if form.answers is defined %}
-            <h3>Answers <a href="#" id="add-answer" class="btn btn-default"> + Nueva </a></h3>
-            <table id="answers-container" class="table tabler-bordered" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">
+            <h3>{% trans %}Answers{% endtrans %} <a href="#" id="add-answer" class="btn btn-default"> + {% trans %}New{% endtrans %} </a></h3>
+            <table id="answers-container" class="table table-bordered" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">
                 <thead>
                     <tr>
-                        <th>Respuesta</th>
-                        <th>¿Correcta?</th>
-                        <th>¿Borrar?</th>
+                        <th>{% trans %}Answer{% endtrans %}</th>
+                        <th>{% trans %}Right?{% endtrans %}</th>
+                        <th>{% trans %}Delete?{% endtrans %}</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for answer in form.answers %}
                         {{ form_widget(answer) }}
                     {% endfor %}
+                    {# Para evitar la etiqueta en caso de estar vacio #}
                     {% do form.answers.setRendered %}
                 </tbody>
             </table>
         {% endif %}
-
         <input type="submit" value="Guardar">
     {{ form_end(form) }}
 
@@ -40,8 +40,7 @@
 
     <a href="{{ path('question_index') }}">Back to the list</a>
 {% endblock %}
-
 {% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/questions.js') }}"></script>
+  {{ parent() }}
+  <script type="text/javascript" src="{{ asset('js/questions.js') }}"></script>
 {% endblock %}

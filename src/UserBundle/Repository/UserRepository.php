@@ -23,4 +23,38 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
           ->getQuery()
           ->getOneOrNullResult();
   }
+
+    public function findByDomain($domain)
+    {
+        //$qb = $this->get('VmailBundle:User');
+        $qb = $this->createQueryBuilder('u');
+        $qb
+            ->select('u')
+            ->join('u.alias', 'u')
+            ->where('u.domain = :domain')
+            ->andWhere('u.list = 1')
+            ->setParameter('domain', $domain)
+        ;
+        $query = $qb->getQuery();
+        return $query->getResult();
+
+    }
+
+    public function findLocalAliases()
+    {
+        //$qb = $this->get('VmailBundle:Alias');
+        $qb = $this->createQueryBuilder('u');
+        $qb
+            ->select('u')
+            ->join('u.alias', 'u')
+            ->where('u.domain = :domain')
+            ->andWhere('u.list = 1')
+            ->setParameter('domain', 0)
+        ;
+        $query = $qb->getQuery();
+        return $query->getResult();
+
+    }
+
+
 }

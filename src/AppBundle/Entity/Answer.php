@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Answer
  *
  * @ORM\Table(name="answer")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\AnswerRepository")
+ * @ORM\Entity
  */
 class Answer
 {
@@ -111,6 +111,9 @@ class Answer
     public function setValid($valid)
     {
         $this->valid = $valid;
+        if ($this->isValid()) {
+            $this->question->addValidAnswer($this);
+        }
 
         return $this;
     }
